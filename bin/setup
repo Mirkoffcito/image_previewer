@@ -1,0 +1,27 @@
+#!/bin/bash
+set -e
+
+docker compose build
+
+# Install bundler if missing
+docker compose run --rm app bash -c 'gem list -i bundler || gem install bundler'
+
+# Create Gemfile if missing
+docker compose run --rm app bash -c 'test -f Gemfile || bundle init'
+
+docker compose run --rm app bash -c 'bundle config set force_ruby_platform true'
+
+# Install Ruby deps
+docker compose run --rm app bundle install
+
+# idempotent binstub generation
+docker compose run --rm app bash -c '[ -f bin/rackup ] || bundle binstubs rack'
+
+docker compose run --rm app bash -c 'mkdir -p /tmp/xdg-runtime && chmod 700 /tmp/xdg-runtime'
+
+## Install dropzone
+# docker compose run --rm --user root app bash -c 'npm install --save dropzone'
+# docker compose run --rm --user root app bash -c 'npm install --sadev postcss-cli'
+# docker compose run --rm --user root app bash -c 'npm install @splidejs/splide'
+
+echo "✅ Setup complete"

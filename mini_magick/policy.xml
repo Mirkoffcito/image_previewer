@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<policymap>
+  <policy domain="module" rights="read|write" pattern="{PS,PDF,XPS,EPS}" />
+
+  <policy domain="delegate" rights="read|write" pattern="PS" />
+  <policy domain="delegate" rights="read|write" pattern="EPS" />
+
+  <policy domain="coder" rights="read|write" pattern="EPS" />
+  <policy domain="coder" rights="read|write" pattern="PDF" />
+  <policy domain="coder" rights="read|write" pattern="XPS" />
+  <policy domain="coder" rights="read|write" pattern="PS" />
+</policymap>

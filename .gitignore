@@ -1,0 +1,10 @@
+# Ignore all example input files
+/lib/examples/
+/web/public/tmp/
+/output
+/node_modules
+/.npm
+/web/public/styles.css
+
+
+README.install.md

@@ -1,0 +1,19 @@
+<h2>Your Preview</h2>
+
+<% if preview_url %>
+  <div class="preview-container" style="max-width: 400px; margin: 1em auto; text-align: center;">
+    <img src="<%= preview_url %>" alt="Generated preview"
+         style="width: 100%; height: auto; border: 1px solid #ccc; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+  </div>
+  <p style="text-align: center;">
+    <a href="<%= preview_url %>" download>
+      Download full-res
+    </a>
+  </p>
+<% else %>
+  <p>No preview generated.</p>
+<% end %>
+
+<p>
+  <a href="/">← Generate another preview</a>
+</p>

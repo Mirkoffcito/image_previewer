@@ -1,0 +1,54 @@
+FROM ruby:3.4.4-bookworm
+# FROM ruby:3.4.4-bullseye
+ENV DEBIAN_FRONTEND=noninteractive \
+    BUNDLE_JOBS=4 
+    
+# Instalar dependencias de sistema
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libvips-dev \
+    imagemagick \
+    ghostscript \
+    poppler-utils \
+    libssl-dev \
+  && rm -rf /var/lib/apt/lists/*
+
+# Replace the default ImageMagick policy file with our custom one
+COPY mini_magick/policy.xml /etc/ImageMagick-6/policy.xml
+
+# Install node
+RUN apt-get update && apt-get install -y --no-install-recommends \
+          curl gnupg \
+          && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+          && apt-get install -y nodejs \
+          && rm -rf /var/lib/apt/lists/*
+
+# Install Vulkan runtime + unzip
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
+      ca-certificates unzip \
+      libvulkan1 mesa-vulkan-drivers vulkan-tools \
+ && rm -rf /var/lib/apt/lists/*
+
+# Persistently install waifu2x-ncnn-vulkan at build time
+RUN set -eux; \
+    ZIP_URL="https://github.com/nihui/waifu2x-ncnn-vulkan/releases/download/20250504/waifu2x-ncnn-vulkan-20250504-ubuntu.zip"; \
+    curl -L "$ZIP_URL" -o /tmp/waifu2x.zip; \
+    unzip /tmp/waifu2x.zip -d /tmp; \
+    cd /tmp/waifu2x-ncnn-vulkan-20250504-ubuntu; \
+    # Move the CLI and all model directories side-by-side
+    mv waifu2x-ncnn-vulkan models-* /usr/local/bin/; \
+    rm -rf /tmp/*
+
+WORKDIR /app
+
+# copy only package files first so npm layers cache
+COPY package.json package-lock.json ./
+COPY Gemfile Gemfile.lock ./
+
+# Clean install (from package-lock.json) all your Tailwind dependencies at build time
+RUN npm ci
+
+COPY . .
+
+CMD ["irb"]

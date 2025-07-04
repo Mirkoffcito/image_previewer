@@ -1,0 +1,102 @@
+<div data-feature="preview"
+  class="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-6 transition-colors" 
+>
+  <div class="w-full max-w-lg bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 transition-colors">
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">
+      <span>Upload an image to Preview</span>
+    </h2>
+
+    <!-- PREVIEW FORM -->
+    <form
+        action="/preview" 
+        method="post" 
+        enctype="multipart/form-data" 
+        class="space-y-6" 
+        data-controller="shared--form-submit shared--dropzone"
+        data-shared--form-submit-mode-value="preview"
+        data-action="submit->shared--form-submit#disableSubmit"
+        data-shared--form-submit-target="form"
+        data-shared--dropzone-url-value="/preview"
+        data-shared--dropzone-max-filesize-value="256"
+      >
+      <%= csrf.form_tag %>
+
+      <!-- File input -->
+      <div data-shared--dropzone-target="zone" class="border-2 border-dashed rounded-lg p-8 cursor-pointer">
+        <img 
+          src="public/assets/icons/files-folder.svg" 
+          alt="Files icon" 
+          class="h-12 w-12 mb-3 filter dark:invert"
+        />
+        <p class="mb-2 text-gray-700 dark:text-gray-300">
+          Drag & drop files here (or click to browse)
+        </p>
+        <p class="text-xs text-gray-500 dark:text-gray-400">
+          Accepted types: PNG, JPEG, GIF, TIFF, PSD, EPS, PDF, SVG
+        </p>
+        <div 
+            data-shared--dropzone-target="previews" 
+            class="mt-4 space-y-1 text-gray-700 dark:text-gray-300"
+          ></div>
+      </div>
+
+
+      <!-- Engine -->
+      <fieldset class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+        <legend class="px-2 text-gray-800 dark:text-gray-100 font-medium">Engine</legend>
+        <div class="flex space-x-4 mt-2">
+          <label class="inline-flex items-center">
+            <input type="radio" name="engine" value="vips" checked class="form-radio text-blue-600 dark:text-blue-400">
+            <span class="ml-2 text-gray-700 dark:text-gray-300">Vips</span>
+          </label>
+          <label class="inline-flex items-center">
+            <input type="radio" name="engine" value="magick" class="form-radio text-blue-600 dark:text-blue-400">
+            <span class="ml-2 text-gray-700 dark:text-gray-300">Magick</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- Format -->
+      <fieldset class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+        <legend class="px-2 text-gray-800 dark:text-gray-100 font-medium">Format</legend>
+        <div class="flex space-x-4 mt-2">
+          <label class="inline-flex items-center">
+            <input type="radio" name="format" value="png" checked class="form-radio text-blue-600 dark:text-blue-400">
+            <span class="ml-2 text-gray-700 dark:text-gray-300">PNG</span>
+          </label>
+          <label class="inline-flex items-center">
+            <input type="radio" name="format" value="jpeg" class="form-radio text-blue-600 dark:text-blue-400">
+            <span class="ml-2 text-gray-700 dark:text-gray-300">JPEG</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- Colorspace -->
+      <fieldset class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+        <legend class="px-2 text-gray-800 dark:text-gray-100 font-medium">Colorspace</legend>
+        <div class="flex space-x-4 mt-2">
+          <label class="inline-flex items-center">
+            <input type="radio" name="colorspace" value="srgb" checked class="form-radio text-blue-600 dark:text-blue-400">
+            <span class="ml-2 text-gray-700 dark:text-gray-300">sRGB</span>
+          </label>
+          <label class="inline-flex items-center">
+            <input type="radio" name="colorspace" value="cmyk" class="form-radio text-blue-600 dark:text-blue-400">
+            <span class="ml-2 text-gray-700 dark:text-gray-300">CMYK</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- Submit -->
+      <div>
+        <button
+          type="submit"
+          class="w-full bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+          data-shared--form-submit-target="submit"
+          data-shared--dropzone-target="submitFiles"
+        >
+          Generate Preview
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

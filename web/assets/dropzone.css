@@ -1,0 +1,15 @@
+/* dropzone.css */
+.dz-preview .dz-error-mark,
+.dz-preview .dz-success-mark {
+  display: none !important;
+}
+
+.dz-preview .dz-remove {
+  font-size: 0.875rem;
+  color: #dc2626;
+  display: block;
+  margin-top: 0.5rem;
+}
+
+
+

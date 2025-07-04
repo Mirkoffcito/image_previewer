@@ -1,0 +1,149 @@
+<div data-feature="converter"
+  class="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center p-6 transition-colors" 
+>
+  <div class="w-full max-w-lg bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 transition-colors">
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6">
+      <span>Upload a file to Convert to PDF</span>
+    </h2>
+
+    <!-- CONVERTER FORM -->
+    <form 
+        action="/convert" 
+        method="post" 
+        enctype="multipart/form-data" 
+        class="space-y-6"
+        data-controller="shared--form-submit shared--dropzone"
+        data-shared--form-submit-mode-value="convert"
+        data-action="submit->shared--form-submit#disableSubmit"
+        data-shared--form-submit-target="form"
+        data-shared--dropzone-url-value="/convert"
+        data-shared--dropzone-max-filesize-value="256"
+      >
+      <%= csrf.form_tag %>
+
+      <!-- File input -->
+      <div data-shared--dropzone-target="zone" class="border-2 border-dashed rounded-lg p-8 cursor-pointer">
+        <img 
+          src="public/assets/icons/files-folder.svg" 
+          alt="Files icon" 
+          class="h-12 w-12 mb-3 filter dark:invert"
+        />
+        <p class="mb-2 text-gray-700 dark:text-gray-300">
+          Drag & drop files here (or click to browse)
+        </p>
+        <p class="text-xs text-gray-500 dark:text-gray-400">
+          Accepted types: PNG, JPEG, GIF, TIFF, PSD, EPS, SVG
+        </p>
+        <div 
+            data-shared--dropzone-target="previews" 
+            class="mt-4 space-y-1 text-gray-700 dark:text-gray-300"
+          ></div>
+      </div>
+
+      <!-- Engine -->
+      <fieldset class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+        <legend class="px-2 text-gray-800 dark:text-gray-100 font-medium">Engine</legend>
+        <div class="flex space-x-4 mt-2">
+          <label class="inline-flex items-center">
+            <input type="radio" name="engine" value="vips" checked class="form-radio text-blue-600 dark:text-blue-400">
+            <span class="ml-2 text-gray-700 dark:text-gray-300">Vips</span>
+          </label>
+          <label class="inline-flex items-center">
+            <input type="radio" name="engine" value="magick" class="form-radio text-blue-600 dark:text-blue-400">
+            <span class="ml-2 text-gray-700 dark:text-gray-300">Magick</span>
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- Page options -->
+      <fieldset class="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+        <legend class="px-2 text-gray-800 dark:text-gray-100 font-medium">Output options</legend>
+
+        <div class="grid gap-3">
+          <label class="flex items-center space-x-3">
+            <span class="w-32">Page size</span>
+            <select name="page_size" class="form-select">
+              <option value="a4" selected>A4 (210×297 mm)</option>
+              <option value="letter">Letter (8.5×11 in)</option>
+              <option value="a3">A3</option>
+              <option value="a5">A5</option>
+            </select>
+          </label>
+
+          <label class="flex items-center space-x-3">
+            <span class="w-32">Orientation</span>
+            <select name="orientation" class="form-select">
+              <option value="portrait" selected>Portrait</option>
+              <option value="landscape">Landscape</option>
+            </select>
+          </label>
+
+          <label class="flex items-center space-x-3">
+            <span class="w-32">Layout</span>
+            <select name="layout" id="converter-layout" class="form-select">
+              <option value="one_per_page" selected>One image per page</option>
+              <option value="grid">Grid (rows × cols)</option>
+              <option value="fit_all_in_one">Pack all into one page</option>
+            </select>
+          </label>
+
+          <!-- shown only for grid -->
+          <div id="grid-options" style="display:none;">
+            <label class="flex items-center space-x-3">
+              <span class="w-32">Rows</span>
+              <input type="number" min="1" max="10" name="rows" value="2" class="form-input w-20" />
+            </label>
+
+            <label class="flex items-center space-x-3">
+              <span class="w-32">Cols</span>
+              <input type="number" min="1" max="10" name="cols" value="2" class="form-input w-20" />
+            </label>
+          </div>
+
+          <label class="flex items-center space-x-3">
+            <span class="w-32">Scale</span>
+            <select name="scale_mode" class="form-select">
+              <option value="fit" selected>Fit (preserve aspect, no crop)</option>
+              <option value="fill">Fill (cover & crop)</option>
+            </select>
+          </label>
+
+          <label class="flex items-center space-x-3">
+            <span class="w-32">DPI</span>
+            <input type="number" name="dpi" min="72" max="600" value="150" class="form-input w-24" />
+          </label>
+
+          <label class="flex items-center space-x-3">
+            <span class="w-32">Margins (mm)</span>
+            <input type="number" name="margin_mm" min="0" max="50" value="10" class="form-input w-24" />
+          </label>
+        </div>
+      </fieldset>
+
+      <!-- Submit -->
+      <div>
+        <button
+          type="submit"
+          class="w-full bg-green-600 dark:bg-green-500 hover:bg-green-700 dark:hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors"
+          data-shared--form-submit-target="submit"
+          data-shared--dropzone-target="submitFiles"
+        >
+          Convert to PDF
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- small JS to toggle grid options -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const layout = document.getElementById('converter-layout');
+    const gridOpts = document.getElementById('grid-options');
+    function toggleGrid() {
+      gridOpts.style.display = layout.value === 'grid' ? 'block' : 'none';
+    }
+    layout.addEventListener('change', toggleGrid);
+    toggleGrid();
+  });
+</script>

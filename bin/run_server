@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# 1) Build CSS and JS
+docker compose run --rm app bash -c 'npm run build:css'
+docker compose run --rm app bash -c 'npm run build:js'
+docker compose run --service-ports --rm --remove-orphans app bundle exec rackup web/config/config.ru -o 0.0.0.0 -p 9292

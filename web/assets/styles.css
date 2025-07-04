@@ -1,0 +1,15 @@
+/* Dropzone prebuilt CSS */
+@import "dropzone/dist/basic.css";
+@import "dropzone/dist/dropzone.css";
+
+/* Dropzone overrides CSS */
+@import "./dropzone.css";
+
+/* SplideJS */
+@import "@splidejs/splide/dist/css/splide-core.min.css";
+@import "@splidejs/splide/dist/css/splide.min.css";
+
+/* Tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

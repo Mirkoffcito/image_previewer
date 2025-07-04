@@ -1,0 +1,27 @@
+volumes:
+  gems_3.4.4:
+  node_modules:
+
+services:
+  app:
+    build: .
+    ports:
+      - "9292:9292"
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+      - gems_3.4.4:/usr/local/bundle
+      - /mnt/c/users/guido/documents/previewer_files:/app/output
+    devices:
+      - /dev/dri:/dev/dri
+    group_add:
+      - "992"   # <- replace with your renderD128 GID
+      - "44"    # <- replace with your card1/video GID
+    environment:
+      - XDG_RUNTIME_DIR=/tmp/xdg-runtime
+      - MAGICK_TEMPORARY_PATH=/tmp/cache
+      - MAGICK_CONFIGURE_PATH=/app/mini_magick
+      - NPM_CONFIG_CACHE=/app/.npm
+    tty: true
+    stdin_open: true
+    user: "${UID:-1000}:${GID:-1000}"

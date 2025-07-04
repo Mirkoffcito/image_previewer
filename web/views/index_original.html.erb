@@ -1,0 +1,30 @@
+<h2>Upload an image to preview</h2>
+
+<form action="/preview" method="post" enctype="multipart/form-data">
+  <%= csrf.form_tag %>
+
+  <label>
+    File:
+    <input type="file" name="file" required>
+  </label>
+
+  <fieldset>
+    <legend>Engine</legend>
+    <label><input type="radio" name="engine" value="vips" checked> Vips</label>
+    <label><input type="radio" name="engine" value="magick"> Magick</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Format</legend>
+    <label><input type="radio" name="format" value="png" checked> PNG</label>
+    <label><input type="radio" name="format" value="jpeg"> JPEG</label>
+  </fieldset>
+
+  <fieldset>
+    <legend>Colorspace</legend>
+    <label><input type="radio" name="colorspace" value="srgb" checked> sRGB</label>
+    <label><input type="radio" name="colorspace" value="cmyk"> CMYK</label>
+  </fieldset>
+
+  <button type="submit" style="margin-top:1em">Generate Preview</button>
+</form>

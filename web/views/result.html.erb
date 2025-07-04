@@ -1,0 +1,54 @@
+<h2 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-6 text-center">
+  Your Result
+</h2>
+
+<% if preview_paths.any? %>
+  <div data-controller="shared--splide"
+       data-shared--splide-paths-value=<%= preview_paths.to_json %>>
+    <div 
+        class="splide max-w-sm mx-auto mb-6"
+        data-shared--splide-target="root"
+      >
+      <div class="splide__track">
+        <ul class="splide__list">
+          <% preview_paths.each do |path| %>
+            <li class="splide__slide p-4">
+              <!-- Filename -->
+              <p class="text-center text-lg font-semibold text-gray-800 dark:text-gray-100 mb-2 truncate px-2">
+                <%= filename(path) %>
+              </p>
+              <!-- Thumbnail -->
+              <div class="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm">
+                <%= thumbnail_image_tag(path, [1280, 720]) %>
+              </div>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Download current slide -->
+    <p class="text-center mb-6">
+      <a
+        href="#"
+        download
+        data-shared--splide-target="link"
+        class="inline-block bg-green-600 dark:bg-green-500 hover:bg-green-700 dark:hover:bg-green-600 text-white font-medium py-2 px-4 rounded transition-colors"
+      >
+        Download
+      </a>
+    </p>
+  </div>
+<% else %>
+  <p class="text-center text-gray-600 dark:text-gray-400 mb-6">
+    No result generated.
+  </p>
+<% end %>
+
+<p class="text-center">
+  <a href="/" class="text-blue-600 dark:text-blue-400 hover:underline">
+    ← Go back
+  </a>
+</p>
+
+
