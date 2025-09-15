@@ -1,6 +1,9 @@
 # Ignore all example input files
 /lib/examples/
 /web/public/tmp/
+/web/public/js/
+/web/public/styles.css
+/web/public/styles.css.map
 /output
 /node_modules
 /.npm
