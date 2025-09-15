@@ -16,7 +16,7 @@ export default class extends Controller {
     this.initTheme()
 
     // --- Active feature detection
-    const key = document.querySelector("[data-feature]").dataset.feature.trim() || this.inferKeyFromPath(location.pathname) || "preview"
+    const key = document.querySelector("[data-feature]")?.dataset?.feature?.trim() || this.inferKeyFromPath(location.pathname) || "preview"
     console.log("key from element", key);
     this.applyActive(key)
 
