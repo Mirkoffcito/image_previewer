@@ -12,6 +12,12 @@ ImagePreviewer.define do
     route "main#index"
   end
 
+  on get, "up" do
+    res.status = 200
+    res['content-type'] = 'text/plain'
+    res.write "ok"
+  end
+
   ############ PREVIEWER ###############
   on get, "preview" do
     route "previewer#index"
