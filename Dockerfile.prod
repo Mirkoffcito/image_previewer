@@ -1,7 +1,8 @@
 FROM ruby:3.4.4-bookworm
 # FROM ruby:3.4.4-bullseye
 ENV DEBIAN_FRONTEND=noninteractive \
-    BUNDLE_JOBS=4 
+    BUNDLE_JOBS=4 \
+    RACK_ENV=production
     
 # Instalar dependencias de sistema
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -49,6 +50,13 @@ COPY Gemfile Gemfile.lock ./
 # Clean install (from package-lock.json) all your Tailwind dependencies at build time
 RUN npm ci
 
+# copy gem manifests and install bundles (cache layer)
+COPY Gemfile Gemfile.lock ./
+RUN gem install bundler -v "$(bundle -v 2>/dev/null | awk '{print $3}')" || true
+RUN bundle install --without development test
+
 COPY . .
+
+EXPOSE 9292
 
 CMD ["bundle", "exec", "rackup", "web/config/config.ru", "-o", "0.0.0.0", "-p", "9292"]
