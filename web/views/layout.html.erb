@@ -1,27 +1,60 @@
 <!DOCTYPE html>
 <html lang="en" class="">
-<head>
-  <meta charset="utf-8">
-  <title>Image Previewer</title>
-  <%= csrf.meta_tag %>
+  <head>
+    <%= csrf.meta_tag %>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <link rel="stylesheet" href="/styles.css">
-  <script src="/js/application.js" defer></script>
-</head>
-<body class="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors">
+    <title>Guido Medina — Image Previewer</title>
+    <meta name="description" content="Image Previewer by Guido Medina. Image previews with drag & drop and dark mode." />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
 
-  <%= partial "_navbar" %>
+    <!-- Theme color (adaptive) -->
+    <meta name="theme-color" content="#0ea5e9" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b1324" media="(prefers-color-scheme: dark)" />
 
-  <!-- Main content -->
-  <main class="max-w-3xl mx-auto py-8 px-4">
-    <%= content %>
-  </main>
+      <!-- Open Graph -->
+    <meta property="og:site_name" content="Guido Medina" />
+    <meta property="og:title" content="Image Previewer — by Guido Medina" />
+    <meta property="og:description" content="Preview images instantly. Drag & drop, copy/paste, dark mode." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/og-image.png" />
 
-  <!-- Footer -->
-  <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
-    <div class="max-w-7xl mx-auto py-4 px-4 text-center text-sm text-gray-600 dark:text-gray-400">
-      &copy; <%= Time.now.year %> Image Previewer.
-    </div>
-  </footer>
-</body>
+      <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Image Previewer — by Guido Medina" />
+    <meta name="twitter:description" content="Preview images instantly. Drag & drop, copy/paste, dark mode." />
+    <meta name="twitter:image" content="/og-image.png" />
+
+    <base href="/" />
+
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/js/application.js" defer></script>
+
+    <!-- Favicons -->
+    <link href="/favicon.ico" rel="icon" />
+  </head>
+  <body class="min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors">
+
+    <%= partial "_navbar" %>
+
+    <!-- Main content -->
+    <main class="max-w-3xl mx-auto py-8 px-4">
+      <%= content %>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+      <div class="max-w-7xl mx-auto py-4 px-4 text-center text-sm text-gray-600 dark:text-gray-400">
+        © <%= Time.now.year %> <span class="font-semibold">Guido Medina</span> — Image Previewer.
+      </div>
+    </footer>
+
+    <noscript>
+      <div class="max-w-3xl mx-auto my-4 px-4 py-3 rounded-lg bg-yellow-100 text-yellow-900">
+        JavaScript is required for full functionality. You can still view static content.
+      </div>
+    </noscript>
+  </body>
 </html>
