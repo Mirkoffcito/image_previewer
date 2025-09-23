@@ -16,3 +16,8 @@ gem 'rack'
 gem 'rackup'
 gem 'rack-protection'
 gem 'puma'
+
+group :development do
+  gem 'kamal'
+  gem 'dotenv'
+end

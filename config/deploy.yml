@@ -1,0 +1,32 @@
+# config/deploy.yml
+service: imgpreviewer
+image: ghcr.io/mirkoffcito/imgpreviewer
+
+servers:
+  web:
+    - 46.62.201.28
+
+ssh:
+  user: deploy
+  port: 1008
+
+registry:
+  server: ghcr.io
+  username: mirkoffcito
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+builder:
+  arch: amd64
+  dockerfile: "Dockerfile.prod"
+
+env:
+  clear:
+    RACK_ENV: production
+
+proxy:
+  host: imgpreviewer.medinag.com
+  app_port: 9292
+  ssl: 
+    certificate_pem: CERTIFICATE_PEM
+    private_key_pem: PRIVATE_KEY_PEM

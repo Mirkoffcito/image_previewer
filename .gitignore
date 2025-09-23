@@ -9,5 +9,7 @@
 /.npm
 /web/public/styles.css
 
+.env
+.kamal/certs
 
 README.install.md
