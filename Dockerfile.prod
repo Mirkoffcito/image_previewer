@@ -45,8 +45,6 @@ WORKDIR /app
 
 # copy only package files first so npm layers cache
 COPY package.json package-lock.json ./
-COPY Gemfile Gemfile.lock ./
-
 # Clean install (from package-lock.json) all your Tailwind dependencies at build time
 RUN npm ci
 
@@ -56,6 +54,9 @@ RUN gem install bundler -v "$(bundle -v 2>/dev/null | awk '{print $3}')" || true
 RUN bundle install --without development test
 
 COPY . .
+
+ENV NODE_ENV=production
+RUN npm run build:css && npm run build:js
 
 EXPOSE 9292
 
