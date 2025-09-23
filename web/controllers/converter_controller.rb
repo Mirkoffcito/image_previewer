@@ -11,7 +11,7 @@ class ConverterController < BaseController
     # Sends one or multiple files to the converter and returns a PDF
     tempfiles_data    = upload.map { |k, v| { tempfile: v["tempfile"], filename: v["filename"] } }
     out_path = convert(tempfiles_data.map { |tmp_data| tmp_data[:tempfile].path }, filename: 'pdf_output')
-    pdf_rel_path = relative_to_webroot(out_path)
+    pdf_rel_path = relative_to_public(out_path)
 
     # Base64-encode your relative path as the token
     payload = { paths: Array(pdf_rel_path) }

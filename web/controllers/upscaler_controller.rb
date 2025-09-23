@@ -18,7 +18,7 @@ class UpscalerController < BaseController
     out_paths = tempfiles_data.map { |tmp_data| convert(tmp_data[:tempfile].path, {filename: tmp_data[:filename]}) }
 
     # Paths relative to 'web' root
-    rel_paths = out_paths.map { |path| relative_to_webroot(path) }
+    rel_paths = out_paths.map { |path| relative_to_public(path) }
 
     # Base64-encode your relative path as the token
     payload = { v: 1, paths: rel_paths }

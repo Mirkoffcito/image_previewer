@@ -28,23 +28,25 @@ ImagePreviewer.define do
   end
 
   ############ PDF CONVERTER ###############
-  on get, "converter" do
-    route "converter#index"
-  end
+  # Re-Activate once functionality is production ready
+  # on get, "converter" do
+  #   route "converter#index"
+  # end
 
-  on post, "convert" do
-    route "converter#convert_to_pdf"
-  end
+  # on post, "convert" do
+  #   route "converter#convert_to_pdf"
+  # end
 
   ############ UPSCALER ###############
 
-  on get, "upscale" do
-    route "upscaler#index"
-  end
+  # Re-Activate once functionality is production ready
+  # on get, "upscale" do
+  #   route "upscaler#index"
+  # end
 
-  on post, "upscale" do
-    route "upscaler#upscale"
-  end
+  # on post, "upscale" do
+  #   route "upscaler#upscale"
+  # end
 
   on get, ":token" do |token|
     req.params["token"] = token

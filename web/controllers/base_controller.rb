@@ -15,8 +15,8 @@ class BaseController
     res.finish
   end
 
-  def relative_to_webroot(full_path)
-    full_path.sub(/\A#{Regexp.escape(settings[:root])}/, "")
+  def relative_to_public(full_path)
+    full_path.sub(/\A#{Regexp.escape(settings[:root])}/, "").sub("/public", "")
   end
 
   def output_dir

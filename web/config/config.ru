@@ -1,14 +1,13 @@
 require "rack"
 require "rack/static"
-
-# 1) serve /public directly
-use Rack::Static, urls: ["/public"], root: File.expand_path("..", __dir__)
-
-# 2) bootstrap gems, load lib/
 require_relative "init"
-
-# 3) load your Cuba app definition
 require_relative "routes"
+
+PUBLIC_DIR = File.expand_path("../public", __dir__)
+
+use Rack::Static,
+  urls: ["/assets", "/styles.css", "/styles.css.map", "/js", "/favicon.ico", "/tmp"],
+  root: PUBLIC_DIR
 
 # 4) mount the Cuba app
 run ImagePreviewer

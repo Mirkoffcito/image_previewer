@@ -5,9 +5,10 @@ require "cuba/render"
 class ImagePreviewer < Cuba
   APP_ROOT = File.expand_path("..", __dir__)
   settings[:root] = APP_ROOT
+  settings[:public] = File.join(APP_ROOT, "public")
 
   # middleware & plugins
-  use Rack::Session::Cookie, :secret => "wzulcsnnzrqruitydxibxbhydjmxzyjqhqrnkrkfahuhvshgeakrqkgonumnywau"
+  use Rack::Session::Cookie, :secret => SecureRandom.base64(64)
 
   plugin Safe
   plugin Render
